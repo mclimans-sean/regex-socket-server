@@ -25,22 +25,22 @@ module.exports = function(io) {
       // if(users.indexOf(obj.user) == -1) {
       console.log("Joining room ->", obj.room);
       console.log("Users joined the room ", users);
-      socket.join(obj.room);
+      socket.join(obj.room.name);
       users.push(obj.user);
 
-      var indexOfRoomName = roomNames.indexOf(obj.room);
+      var indexOfRoomName = roomNames.indexOf(obj.room.name);
 
-      var room = {};
+      // var room = {};
 
       if(indexOfRoomName == -1) {
-        roomNames.push(obj.room);
-        room = {
-          name: obj.room,
-          users: []
-        }
-        rooms.push(room);
+        roomNames.push(obj.room.name);
+        // room = {
+        //   name: obj.room,
+        //   users: []
+        // }
+        rooms.push(obj.room);
       } else {
-        room = rooms[indexOfRoomName];
+        obj.room = rooms[indexOfRoomName];
       }
 
 
@@ -51,7 +51,7 @@ module.exports = function(io) {
 
 
 
-      room.users.push(user);
+      obj.room.users.push(user);
 
 
       //
@@ -67,7 +67,7 @@ module.exports = function(io) {
       }
 
 
-      io.to(obj.room).emit('room', obj);
+      io.to(obj.room.name).emit('room', obj.room);
       // } else {
       // io.to(obj.room).emit('no join', "User with this name does exist...");
       // }
