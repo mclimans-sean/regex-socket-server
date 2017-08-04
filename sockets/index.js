@@ -7,7 +7,8 @@ module.exports = function(io) {
 
   io.on('connection', function(socket) {
     socket.on('on message', function(msg) {
-      var obj = JSON.parse(msg);
+      // var obj = JSON.parse(msg);
+      var obj = msg;
       console.log("room ", obj.room, " user", obj.user);
       io.to(obj.room).emit('on message', obj.msg);
     });
@@ -18,7 +19,8 @@ module.exports = function(io) {
     });
 
     socket.on('room', function(info) {
-      var obj = JSON.parse(info);
+      // var obj = JSON.parse(info);
+      var obj = info;
 
       // if(users.indexOf(obj.user) == -1) {
       console.log("Joining room ->", obj.room);
@@ -73,28 +75,6 @@ module.exports = function(io) {
     });
 
   });
-
-
-
-  //
-  //
-  // io.on('connection', function(socket) {
-  //   console.log('Client connected:', socket.id);
-  //
-  //   socket.on('disconnect', function(data) {
-  //     console.log('Client disconnected:', socket.id);
-  //   });
-  //
-  //   socket.on('hello', function(data) {
-  //     console.log(data);
-  //     socket.emit('hello', data);
-  //   });
-  // });
-  //
-  //
-  //
-
-
 
 
 }
